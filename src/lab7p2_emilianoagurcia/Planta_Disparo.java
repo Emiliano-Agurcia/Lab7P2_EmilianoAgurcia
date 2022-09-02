@@ -5,10 +5,13 @@
  */
 package lab7p2_emilianoagurcia;
 
+import java.awt.Color;
+
 /**
  *
  * @author emili
  */
-public class Planta_Disparo {
-    
+public class Planta_Disparo extends Planta{
+    String NombreProyectil;
+//    Color Color;
 }

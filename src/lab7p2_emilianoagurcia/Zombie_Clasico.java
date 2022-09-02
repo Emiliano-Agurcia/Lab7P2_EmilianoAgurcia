@@ -9,7 +9,6 @@ package lab7p2_emilianoagurcia;
  *
  * @author emili
  */
-public class Planta_Explosiva extends Planta{
-    int Magnitud;//De explosion
+public class Zombie_Clasico {
     
 }

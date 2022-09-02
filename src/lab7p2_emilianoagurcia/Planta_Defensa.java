@@ -9,6 +9,8 @@ package lab7p2_emilianoagurcia;
  *
  * @author emili
  */
-public class Planta_Defensa {
-    
+public class Planta_Defensa extends Planta{
+    int Altura;
+    int NivelDureza;
+    int Peso;
 }
