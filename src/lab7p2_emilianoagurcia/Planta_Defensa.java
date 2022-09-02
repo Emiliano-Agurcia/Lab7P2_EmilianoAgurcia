@@ -14,12 +14,14 @@ public class Planta_Defensa extends Planta{
     int NivelDureza;
     int Peso;
 
-    public Planta_Defensa(int Altura, int NivelDureza, int Peso, String Rango) {
-        super(Rango);
+    public Planta_Defensa(int Altura, int NivelDureza, int Peso, String Rango, String Nombre, int Ataque, int Vida) {
+        super(Rango, Nombre, Ataque, Vida);
         this.Altura = Altura;
         this.NivelDureza = NivelDureza;
         this.Peso = Peso;
     }
+
+    
 
     public int getAltura() {
         return Altura;

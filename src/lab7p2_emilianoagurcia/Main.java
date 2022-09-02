@@ -6,6 +6,9 @@
 package lab7p2_emilianoagurcia;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.Color;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -17,13 +20,17 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class Main extends javax.swing.JFrame {
     
+    private ArrayList <Entidad> Entidades = new ArrayList();
+    private ArrayList <Planta> Plantas = new ArrayList();
+    private ArrayList <Zombie> Zombies = new ArrayList();
+    
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
         
-        //Nodos Plantas y Zombies
+        //Nodos Plantas y Zombies                                                               (Lo siento se me olvido como hacerlo desde Properties xd)
         DefaultTreeModel ModeloArbol = (DefaultTreeModel) T_Tree.getModel();
         DefaultMutableTreeNode Raiz = (DefaultMutableTreeNode) ModeloArbol.getRoot();
     
@@ -32,15 +39,15 @@ public class Main extends javax.swing.JFrame {
         Raiz.add(Nodo_Plantas);
         Raiz.add(Nodo_Zombies);
         
-        DefaultMutableTreeNode Nodo_Planta_Defensa = new DefaultMutableTreeNode("Defensa");
-        DefaultMutableTreeNode Nodo_Planta_Disparo = new DefaultMutableTreeNode("Disparo");
-        DefaultMutableTreeNode Nodo_Planta_Explosiva = new DefaultMutableTreeNode("Explosiva");
+        DefaultMutableTreeNode Nodo_Planta_Defensa = new DefaultMutableTreeNode("Defensa");     //Raiz.getChildAt(0).getChildAt(0)
+        DefaultMutableTreeNode Nodo_Planta_Disparo = new DefaultMutableTreeNode("Disparo");     //Raiz.getChildAt(0).getChildAt(1)
+        DefaultMutableTreeNode Nodo_Planta_Explosiva = new DefaultMutableTreeNode("Explosiva"); //Raiz.getChildAt(0).getChildAt(2)
         Nodo_Plantas.add(Nodo_Planta_Defensa);
         Nodo_Plantas.add(Nodo_Planta_Disparo);
         Nodo_Plantas.add(Nodo_Planta_Explosiva);
         
-        DefaultMutableTreeNode Nodo_Zombie_Clasico = new DefaultMutableTreeNode("Clasico");
-        DefaultMutableTreeNode Nodo_Zombie_Cargado = new DefaultMutableTreeNode("Cargado");
+        DefaultMutableTreeNode Nodo_Zombie_Clasico = new DefaultMutableTreeNode("Clasico");     //Raiz.getChildAt(1).getChildAt(0)
+        DefaultMutableTreeNode Nodo_Zombie_Cargado = new DefaultMutableTreeNode("Cargado");     //Raiz.getChildAt(1).getChildAt(1)
         Nodo_Zombies.add(Nodo_Zombie_Clasico);
         Nodo_Zombies.add(Nodo_Zombie_Cargado);
         //Fin Nodos Plantas y Zombies
@@ -84,7 +91,6 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        P_TF_NombreProyectil = new javax.swing.JTextField();
         P_TF_Nombre = new javax.swing.JTextField();
         P_SP_Ataque = new javax.swing.JSpinner();
         P_SP_MagnitudExplosion = new javax.swing.JSpinner();
@@ -100,6 +106,7 @@ public class Main extends javax.swing.JFrame {
         P_RB_Defensa = new javax.swing.JRadioButton();
         P_RB_Explosiva = new javax.swing.JRadioButton();
         P_TF_NombreProyectil1 = new javax.swing.JTextField();
+        P_BT_Color = new javax.swing.JButton();
         Tab_Zombies = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -214,7 +221,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel11.setText("Dureza");
         Tab_Plantas.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, -1, -1));
-        Tab_Plantas.add(P_TF_NombreProyectil, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, 180, -1));
         Tab_Plantas.add(P_TF_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 180, -1));
         Tab_Plantas.add(P_SP_Ataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 140, -1));
         Tab_Plantas.add(P_SP_MagnitudExplosion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 140, -1));
@@ -224,6 +230,11 @@ public class Main extends javax.swing.JFrame {
         Tab_Plantas.add(P_SP_Altura, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 140, -1));
 
         P_BT_Crear.setText("CREAR");
+        P_BT_Crear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                P_BT_CrearMouseClicked(evt);
+            }
+        });
         Tab_Plantas.add(P_BT_Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 170, 50));
 
         P_RB_Medio.setText("Medio");
@@ -251,6 +262,7 @@ public class Main extends javax.swing.JFrame {
         P_RB_Explosiva.setText("Explosiva");
         Tab_Plantas.add(P_RB_Explosiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
         Tab_Plantas.add(P_TF_NombreProyectil1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 180, -1));
+        Tab_Plantas.add(P_BT_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, 20));
 
         jTabbedPane1.addTab("Plantas", Tab_Plantas);
 
@@ -303,9 +315,16 @@ public class Main extends javax.swing.JFrame {
         Tab_Zombies.add(Z_SP_Size, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 140, -1));
         Tab_Zombies.add(Z_SP_AñosExperiencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 140, -1));
         Tab_Zombies.add(Z_SP_Enojo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 140, -1));
+
+        Z_BT_AgregarPComida.setText("+");
         Tab_Zombies.add(Z_BT_AgregarPComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 130, 30, 20));
 
         Z_BT_Crear.setText("Crear");
+        Z_BT_Crear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Z_BT_CrearMouseClicked(evt);
+            }
+        });
         Tab_Zombies.add(Z_BT_Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 520, 170, 30));
         Tab_Zombies.add(Z_BT_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, 80, 20));
 
@@ -377,6 +396,98 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_EliminarActionPerformed
 
+    private void P_BT_CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P_BT_CrearMouseClicked
+
+        DefaultTreeModel ModeloArbol = (DefaultTreeModel) T_Tree.getModel();
+        DefaultMutableTreeNode Raiz = (DefaultMutableTreeNode) ModeloArbol.getRoot();
+        
+        try {
+            String Rango;
+            if(P_RB_Bajo.isSelected()){
+                Rango = "Bajo";
+            }else if(P_RB_Medio.isSelected()){
+                Rango = "Medio";
+            }else{
+                Rango = "Alto";
+            }
+
+
+            if(P_RB_Explosiva.isSelected()){
+                Planta newPlanta = new Planta_Explosiva(
+                                (int) P_SP_MagnitudExplosion.getValue(),
+                                Rango,
+                                P_TF_Nombre.getText(),
+                                (int) P_SP_Ataque.getValue(),
+                                (int) P_SP_Vida.getValue()
+                        );
+
+                DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
+                ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(0)).add(Nodo_newPlanta);
+
+            }else if (P_RB_Disparo.isSelected()) {
+                Planta newPlanta = new Planta_Disparo(
+                                Rango,
+                                P_BT_Color.getBackground(),
+                                Rango,
+                                P_TF_Nombre.getText(),
+                                (int) P_SP_Ataque.getValue(),
+                                (int) P_SP_Vida.getValue()
+                        );
+                DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
+                ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(1)).add(Nodo_newPlanta);
+
+            }else {
+                Planta newPlanta = new Planta_Defensa(
+                                (int) P_SP_Altura.getValue(),
+                                (int) P_SP_Dureza.getValue(),
+                                (int) P_SP_Peso.getValue(),
+                                Rango,
+                                P_TF_Nombre.getText(),
+                                (int) P_SP_Ataque.getValue(),
+                                (int) P_SP_Vida.getValue()
+                        );
+                DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
+                ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(2)).add(Nodo_newPlanta);
+            }    
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error");
+        }
+        
+    }//GEN-LAST:event_P_BT_CrearMouseClicked
+
+    private void Z_BT_CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Z_BT_CrearMouseClicked
+        DefaultTreeModel ModeloArbol = (DefaultTreeModel) T_Tree.getModel();
+        DefaultMutableTreeNode Raiz = (DefaultMutableTreeNode) ModeloArbol.getRoot();
+
+        try {
+            if(Z_RB_Clasico.isSelected()){
+                Zombie newZombie = new Zombie_Clasico(
+                    (int) Z_SP_AñosExperiencia.getValue(),
+                    new Bandera(Z_BT_Color.getText(), Z_TF_Imagen.getText()),
+                    Z_TF_Nombre.getText(),
+                    (int) Z_SP_Ataque.getValue(),
+                    (int) Z_SP_Vida.getValue()
+                );
+                
+                DefaultMutableTreeNode Nodo_newZombie = new DefaultMutableTreeNode(newZombie); 
+                ( (DefaultMutableTreeNode) Raiz.getChildAt(1).getChildAt(0)).add(Nodo_newZombie);
+            }else{
+                Zombie newZombie = new Zombie_Cargado(
+                    (int) Z_SP_Size.getValue(),
+                    (int) Z_SP_Edad.getValue(),
+                    (int) Z_SP_Enojo.getValue(),
+                    Z_TF_Nombre.getText(),
+                    (int) Z_SP_Ataque.getValue(),
+                    (int) Z_SP_Vida.getValue()
+                );
+                DefaultMutableTreeNode Nodo_newZombie = new DefaultMutableTreeNode(newZombie); 
+                ( (DefaultMutableTreeNode) Raiz.getChildAt(1).getChildAt(1)).add(Nodo_newZombie);
+            }
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_Z_BT_CrearMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -401,6 +512,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem Elegir;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Imprimir;
+    private javax.swing.JButton P_BT_Color;
     private javax.swing.JButton P_BT_Crear;
     private javax.swing.JRadioButton P_RB_Alto;
     private javax.swing.JRadioButton P_RB_Bajo;
@@ -416,7 +528,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JSpinner P_SP_Peso;
     private javax.swing.JSpinner P_SP_Vida;
     private javax.swing.JTextField P_TF_Nombre;
-    private javax.swing.JTextField P_TF_NombreProyectil;
     private javax.swing.JTextField P_TF_NombreProyectil1;
     private javax.swing.ButtonGroup P_Tipo;
     private javax.swing.JPopupMenu PopUp;

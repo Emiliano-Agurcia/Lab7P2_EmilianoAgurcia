@@ -12,9 +12,12 @@ package lab7p2_emilianoagurcia;
 public class Planta extends Entidad{
     String Rango;//bajo, medio, alto
 
-    public Planta(String Rango) {
+    public Planta(String Rango, String Nombre, int Ataque, int Vida) {
+        super(Nombre, Ataque, Vida);
         this.Rango = Rango;
     }
+
+    
 
     public String getRango() {
         return Rango;

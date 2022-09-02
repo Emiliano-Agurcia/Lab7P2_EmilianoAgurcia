@@ -15,11 +15,14 @@ public class Planta_Disparo extends Planta{
     String NombreProyectil;
     Color Color;
 
-    public Planta_Disparo(String NombreProyectil, Color Color, String Rango) {
-        super(Rango);
+    public Planta_Disparo(String NombreProyectil, Color Color, String Rango, String Nombre, int Ataque, int Vida) {
+        super(Rango, Nombre, Ataque, Vida);
         this.NombreProyectil = NombreProyectil;
         this.Color = Color;
     }
+
+    
+
 
     public String getNombreProyectil() {
         return NombreProyectil;

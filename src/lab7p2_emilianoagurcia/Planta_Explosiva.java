@@ -12,8 +12,8 @@ package lab7p2_emilianoagurcia;
 public class Planta_Explosiva extends Planta{
     int Magnitud;//De explosion
 
-    public Planta_Explosiva(int Magnitud, String Rango) {
-        super(Rango);
+    public Planta_Explosiva(int Magnitud, String Rango, String Nombre, int Ataque, int Vida) {
+        super(Rango, Nombre, Ataque, Vida);
         this.Magnitud = Magnitud;
     }
 
