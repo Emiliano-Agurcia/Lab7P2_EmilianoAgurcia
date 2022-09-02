@@ -5,12 +5,58 @@
  */
 package lab7p2_emilianoagurcia;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author emili
  */
-public class Zombie_Cargado {
+public class Zombie_Cargado extends Zombie{
     int Size;
     int Edad;
     int NivelEnojo;
+    ArrayList <String> PersonasComidas = new ArrayList();
+
+    public Zombie_Cargado(int Size, int Edad, int NivelEnojo) {
+        this.Size = Size;
+        this.Edad = Edad;
+        this.NivelEnojo = NivelEnojo;
+    }
+
+    public int getSize() {
+        return Size;
+    }
+
+    public void setSize(int Size) {
+        this.Size = Size;
+    }
+
+    public int getEdad() {
+        return Edad;
+    }
+
+    public void setEdad(int Edad) {
+        this.Edad = Edad;
+    }
+
+    public int getNivelEnojo() {
+        return NivelEnojo;
+    }
+
+    public void setNivelEnojo(int NivelEnojo) {
+        this.NivelEnojo = NivelEnojo;
+    }
+
+    public ArrayList<String> getPersonasComidas() {
+        return PersonasComidas;
+    }
+
+    public void setPersonasComidas(ArrayList<String> PersonasComidas) {
+        this.PersonasComidas = PersonasComidas;
+    }
+
+    @Override
+    public String toString() {
+        return "Zombie_Cargado{" + "Size=" + Size + ", Edad=" + Edad + ", NivelEnojo=" + NivelEnojo + ", PersonasComidas=" + PersonasComidas + '}';
+    }
 }

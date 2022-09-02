@@ -11,5 +11,55 @@ package lab7p2_emilianoagurcia;
  */
 public class Planta_Explosiva extends Planta{
     int Magnitud;//De explosion
+
+    public Planta_Explosiva(int Magnitud, String Rango) {
+        super(Rango);
+        this.Magnitud = Magnitud;
+    }
+
+    public int getMagnitud() {
+        return Magnitud;
+    }
+
+    public void setMagnitud(int Magnitud) {
+        this.Magnitud = Magnitud;
+    }
+
+    public String getRango() {
+        return Rango;
+    }
+
+    public void setRango(String Rango) {
+        this.Rango = Rango;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public int getAtaque() {
+        return Ataque;
+    }
+
+    public void setAtaque(int Ataque) {
+        this.Ataque = Ataque;
+    }
+
+    public int getVida() {
+        return Vida;
+    }
+
+    public void setVida(int Vida) {
+        this.Vida = Vida;
+    }
+
+    @Override
+    public String toString() {
+        return "Planta_Explosiva{" + "Magnitud=" + Magnitud + '}';
+    }
     
 }
