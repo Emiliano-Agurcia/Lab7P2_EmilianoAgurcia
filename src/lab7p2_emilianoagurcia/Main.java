@@ -22,8 +22,8 @@ import javax.swing.tree.DefaultTreeModel;
 public class Main extends javax.swing.JFrame {
     
     private ArrayList <Entidad> Entidades = new ArrayList();
-    private ArrayList <Planta> Plantas = new ArrayList();
-    private ArrayList <Zombie> Zombies = new ArrayList();
+//    private ArrayList <Planta> Plantas = new ArrayList();
+//    private ArrayList <Zombie> Zombies = new ArrayList();
     
     /**
      * Creates new form Main
@@ -49,6 +49,13 @@ public class Main extends javax.swing.JFrame {
         Nodo_Plantas.add(Nodo_Planta_Defensa);
         Nodo_Plantas.add(Nodo_Planta_Disparo);
         Nodo_Plantas.add(Nodo_Planta_Explosiva);
+        
+        DefaultMutableTreeNode Nodo_Planta_Disparo_Bajo = new DefaultMutableTreeNode("Bajo");   //Raiz.getChildAt(0).getChildAt(1).getChildAt(0)
+        DefaultMutableTreeNode Nodo_Planta_Disparo_Medio = new DefaultMutableTreeNode("Medio"); //Raiz.getChildAt(0).getChildAt(1).getChildAt(1)
+        DefaultMutableTreeNode Nodo_Planta_Disparo_Alto = new DefaultMutableTreeNode("Alto");   //Raiz.getChildAt(0).getChildAt(1).getChildAt(2)
+        Nodo_Planta_Disparo.add(Nodo_Planta_Disparo_Alto);
+        Nodo_Planta_Disparo.add(Nodo_Planta_Disparo_Medio);
+        Nodo_Planta_Disparo.add(Nodo_Planta_Disparo_Bajo);
         
         DefaultMutableTreeNode Nodo_Zombie_Clasico = new DefaultMutableTreeNode("Clasico");     //Raiz.getChildAt(1).getChildAt(0)
         DefaultMutableTreeNode Nodo_Zombie_Cargado = new DefaultMutableTreeNode("Cargado");     //Raiz.getChildAt(1).getChildAt(1)
@@ -251,12 +258,15 @@ public class Main extends javax.swing.JFrame {
         });
         Tab_Plantas.add(P_BT_Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 170, 50));
 
+        P_Rango.add(P_RB_Medio);
         P_RB_Medio.setText("Medio");
         Tab_Plantas.add(P_RB_Medio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
+        P_Rango.add(P_RB_Alto);
         P_RB_Alto.setText("Alto");
         Tab_Plantas.add(P_RB_Alto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
+        P_Rango.add(P_RB_Bajo);
         P_RB_Bajo.setText("Bajo");
         P_RB_Bajo.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
             public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
@@ -267,12 +277,15 @@ public class Main extends javax.swing.JFrame {
         });
         Tab_Plantas.add(P_RB_Bajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
+        P_Tipo.add(P_RB_Disparo);
         P_RB_Disparo.setText("Disparo");
         Tab_Plantas.add(P_RB_Disparo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
 
+        P_Tipo.add(P_RB_Defensa);
         P_RB_Defensa.setText("Defensa");
         Tab_Plantas.add(P_RB_Defensa, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, -1, -1));
 
+        P_Tipo.add(P_RB_Explosiva);
         P_RB_Explosiva.setText("Explosiva");
         Tab_Plantas.add(P_RB_Explosiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
         Tab_Plantas.add(P_TF_NombreProyectil1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 180, -1));
@@ -414,7 +427,6 @@ public class Main extends javax.swing.JFrame {
                 Menu_PopUp.show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }
-        
     }//GEN-LAST:event_T_TreeMouseClicked
 
     private void P_BT_CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P_BT_CrearMouseClicked
@@ -433,7 +445,7 @@ public class Main extends javax.swing.JFrame {
             }
 
 
-            if(P_RB_Explosiva.isSelected()){
+    if(P_RB_Explosiva.isSelected()){
                 Planta newPlanta = new Planta_Explosiva(
                                 (int) P_SP_MagnitudExplosion.getValue(),
                                 Rango,
@@ -448,7 +460,7 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Creado Exitosamente");
                 
                 Limpiar_Planta();
-            }else if (P_RB_Disparo.isSelected()) {
+    }else if (P_RB_Disparo.isSelected()) {
                 Planta newPlanta = new Planta_Disparo(
                                 Rango,
                                 P_BT_Color.getBackground(),
@@ -457,13 +469,21 @@ public class Main extends javax.swing.JFrame {
                                 (int) P_SP_Ataque.getValue(),
                                 (int) P_SP_Vida.getValue()
                         );
+                
                 DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
-                ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(1)).add(Nodo_newPlanta);
+                
+                if(P_RB_Bajo.isSelected()){
+                    ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(1).getChildAt(0)).add(Nodo_newPlanta);
+                }else if(P_RB_Medio.isSelected()){
+                    ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(1).getChildAt(1)).add(Nodo_newPlanta);
+                }else{
+                    ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(1).getChildAt(2)).add(Nodo_newPlanta);
+                }
                 
                 JOptionPane.showMessageDialog(this, "Creado Exitosamente");
                 
                 Limpiar_Planta();
-            }else {
+    }else {
                 Planta newPlanta = new Planta_Defensa(
                                 (int) P_SP_Altura.getValue(),
                                 (int) P_SP_Dureza.getValue(),
@@ -546,18 +566,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void ElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirActionPerformed
-        T_L_PlantaElegida.setText("Planta Elegida: " + ((Planta) Selected_Entidad).getNombre());
-        
-        T_L_ZombieElegido.setText("Zombie Elegido: " + ((Zombie) Selected_Entidad).getNombre());
+        if(Selected_Entidad instanceof Zombie){
+            T_L_ZombieElegido.setText("Zombie Elegido: " + ((Zombie) Selected_Entidad).getNombre());    
+        }else{
+            T_L_PlantaElegida.setText("Planta Elegida: " + ((Planta) Selected_Entidad).getNombre());   
+        }
     }//GEN-LAST:event_ElegirActionPerformed
 
     private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
-        if(Selected_Entidad instanceof Zombie){
-            System.out.println(Selected_Entidad);
-        }else{
-            System.out.println(Selected_Entidad);
-        }
-        
+        System.out.println(Selected_Entidad);
     }//GEN-LAST:event_ImprimirActionPerformed
 
     private void Z_BT_AgregarPComidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Z_BT_AgregarPComidaMouseClicked
@@ -664,14 +681,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
-
-    private void EscribirArchivo(){
-        
-    }
-    
-    private void CargarArchivo(){
-        
-    }
     
     DefaultMutableTreeNode Selected_Node;
     Object Selected_Entidad;

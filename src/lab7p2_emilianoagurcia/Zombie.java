@@ -38,6 +38,11 @@ public class Zombie extends Entidad{
     public void setVida(int Vida) {
         this.Vida = Vida;
     }
+
+    @Override
+    public String toString() {
+        return "Zombie{" + '}';
+    }
     
     
 }

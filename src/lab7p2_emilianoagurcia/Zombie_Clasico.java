@@ -61,7 +61,7 @@ public class Zombie_Clasico extends Zombie{
 
     @Override
     public String toString() {
-        return "Zombie_Clasico{" + "YearsExperiencia=" + YearsExperiencia + ", Bandera=" + Bandera + '}';
+        return super.toString() + "Zombie_Clasico{" + "YearsExperiencia=" + YearsExperiencia + ", Bandera=" + Bandera + '}';
     }
 
     

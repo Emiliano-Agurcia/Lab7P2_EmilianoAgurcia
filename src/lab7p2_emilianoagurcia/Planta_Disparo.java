@@ -74,6 +74,6 @@ public class Planta_Disparo extends Planta{
 
     @Override
     public String toString() {
-        return "Planta_Disparo{" + "NombreProyectil=" + NombreProyectil + ", Color=" + Color + '}';
+        return super.toString() + "Planta_Disparo{" + "NombreProyectil=" + NombreProyectil + ", Color=" + Color + '}';
     }
 }

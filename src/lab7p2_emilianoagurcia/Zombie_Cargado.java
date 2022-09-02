@@ -83,6 +83,6 @@ public class Zombie_Cargado extends Zombie{
 
     @Override
     public String toString() {
-        return "Zombie_Cargado{" + "Size=" + Size + ", Edad=" + Edad + ", NivelEnojo=" + NivelEnojo + ", PersonasComidas=" + PersonasComidas + '}';
+        return super.toString() + "Zombie_Cargado{" + "Size=" + Size + ", Edad=" + Edad + ", NivelEnojo=" + NivelEnojo + ", PersonasComidas=" + PersonasComidas + '}';
     }
 }
