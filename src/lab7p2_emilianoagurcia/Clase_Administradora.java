@@ -54,10 +54,21 @@ public class Clase_Administradora {
         this.Archivo = Archivo;
     }
     
-    private void CargarZombie(){
+    private String CargarZombies(){
+        String TextoEnArchivo = "";
+        
+        return TextoEnArchivo;
+    }
+    private String CargarPlantas(){
+        String TextoEnArchivo = "";
+        
+        return TextoEnArchivo;
+    }
+    
+    private void EscribirZombies(){
         
     }
-    private void CargarPlanta(){
+    private void EscribirPlantas(){
         
     }
 }

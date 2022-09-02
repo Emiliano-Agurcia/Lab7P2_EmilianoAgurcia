@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -29,6 +30,9 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        
+        Limpiar_Planta();
+        Limpiar_Zombie();
         
         //Nodos Plantas y Zombies                                                               (Lo siento se me olvido como hacerlo desde Properties xd)
         DefaultTreeModel ModeloArbol = (DefaultTreeModel) T_Tree.getModel();
@@ -65,7 +69,7 @@ public class Main extends javax.swing.JFrame {
         Z_Tipo = new javax.swing.ButtonGroup();
         P_Tipo = new javax.swing.ButtonGroup();
         P_Rango = new javax.swing.ButtonGroup();
-        PopUp = new javax.swing.JPopupMenu();
+        Menu_PopUp = new javax.swing.JPopupMenu();
         Eliminar = new javax.swing.JMenuItem();
         Elegir = new javax.swing.JMenuItem();
         Imprimir = new javax.swing.JMenuItem();
@@ -132,11 +136,11 @@ public class Main extends javax.swing.JFrame {
         Z_SP_Enojo = new javax.swing.JSpinner();
         Z_BT_AgregarPComida = new javax.swing.JButton();
         Z_BT_Crear = new javax.swing.JButton();
-        Z_BT_Color = new javax.swing.JButton();
         Z_RB_Cargado = new javax.swing.JRadioButton();
         Z_RB_Clasico = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Z_TA_PersonasComidas = new javax.swing.JTextArea();
+        Z_BT_Color = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
 
         Eliminar.setText("Eliminar");
@@ -145,13 +149,23 @@ public class Main extends javax.swing.JFrame {
                 EliminarActionPerformed(evt);
             }
         });
-        PopUp.add(Eliminar);
+        Menu_PopUp.add(Eliminar);
 
         Elegir.setText("Elegir");
-        PopUp.add(Elegir);
+        Elegir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ElegirActionPerformed(evt);
+            }
+        });
+        Menu_PopUp.add(Elegir);
 
         Imprimir.setText("Imprimir");
-        PopUp.add(Imprimir);
+        Imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImprimirActionPerformed(evt);
+            }
+        });
+        Menu_PopUp.add(Imprimir);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -262,6 +276,12 @@ public class Main extends javax.swing.JFrame {
         P_RB_Explosiva.setText("Explosiva");
         Tab_Plantas.add(P_RB_Explosiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
         Tab_Plantas.add(P_TF_NombreProyectil1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 180, -1));
+
+        P_BT_Color.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                P_BT_ColorMouseClicked(evt);
+            }
+        });
         Tab_Plantas.add(P_BT_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, 20));
 
         jTabbedPane1.addTab("Plantas", Tab_Plantas);
@@ -317,6 +337,11 @@ public class Main extends javax.swing.JFrame {
         Tab_Zombies.add(Z_SP_Enojo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 140, -1));
 
         Z_BT_AgregarPComida.setText("+");
+        Z_BT_AgregarPComida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Z_BT_AgregarPComidaMouseClicked(evt);
+            }
+        });
         Tab_Zombies.add(Z_BT_AgregarPComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 130, 30, 20));
 
         Z_BT_Crear.setText("Crear");
@@ -326,7 +351,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
         Tab_Zombies.add(Z_BT_Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 520, 170, 30));
-        Tab_Zombies.add(Z_BT_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, 80, 20));
 
         Z_Tipo.add(Z_RB_Cargado);
         Z_RB_Cargado.setText("Cargado");
@@ -341,6 +365,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Z_TA_PersonasComidas);
 
         Tab_Zombies.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, 260, 250));
+        Tab_Zombies.add(Z_BT_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, 180, -1));
 
         jTabbedPane1.addTab("Zombies", Tab_Zombies);
 
@@ -371,6 +396,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_P_RB_BajoAncestorMoved
 
     private void T_TreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_T_TreeMouseClicked
+        
         if(evt.isMetaDown()){
             int Row = T_Tree.getClosestRowForLocation(evt.getX(), evt.getY());
             T_Tree.setSelectionRow(Row);
@@ -379,22 +405,17 @@ public class Main extends javax.swing.JFrame {
             
             Selected_Node = (DefaultMutableTreeNode) v1;
             if(Selected_Node.getUserObject() instanceof Planta){
-                Selected_Planta = (Planta) Selected_Node.getUserObject();
+                Selected_Entidad = (Planta) Selected_Node.getUserObject();
+                
+                Menu_PopUp.show(evt.getComponent(), evt.getX(), evt.getY());
             }else if(Selected_Node.getUserObject() instanceof Zombie){
-                Selected_Zombie = (Zombie) Selected_Node.getUserObject();
+                Selected_Entidad = (Zombie) Selected_Node.getUserObject();
+                
+                Menu_PopUp.show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }
-    }//GEN-LAST:event_T_TreeMouseClicked
-
-    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        int resp = JOptionPane.showConfirmDialog(this, "Seguro desea Eliminar el elemento?");
         
-        if(resp == 0){
-            DefaultTreeModel Modelo = (DefaultTreeModel) T_Tree.getModel();
-            Modelo.removeNodeFromParent(Selected_Node);
-            Modelo.reload();
-        }
-    }//GEN-LAST:event_EliminarActionPerformed
+    }//GEN-LAST:event_T_TreeMouseClicked
 
     private void P_BT_CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P_BT_CrearMouseClicked
 
@@ -423,7 +444,10 @@ public class Main extends javax.swing.JFrame {
 
                 DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
                 ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(0)).add(Nodo_newPlanta);
-
+                
+                JOptionPane.showMessageDialog(this, "Creado Exitosamente");
+                
+                Limpiar_Planta();
             }else if (P_RB_Disparo.isSelected()) {
                 Planta newPlanta = new Planta_Disparo(
                                 Rango,
@@ -435,7 +459,10 @@ public class Main extends javax.swing.JFrame {
                         );
                 DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
                 ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(1)).add(Nodo_newPlanta);
-
+                
+                JOptionPane.showMessageDialog(this, "Creado Exitosamente");
+                
+                Limpiar_Planta();
             }else {
                 Planta newPlanta = new Planta_Defensa(
                                 (int) P_SP_Altura.getValue(),
@@ -448,7 +475,13 @@ public class Main extends javax.swing.JFrame {
                         );
                 DefaultMutableTreeNode Nodo_newPlanta = new DefaultMutableTreeNode(newPlanta); 
                 ( (DefaultMutableTreeNode) Raiz.getChildAt(0).getChildAt(2)).add(Nodo_newPlanta);
+                
+                JOptionPane.showMessageDialog(this, "Creado Exitosamente");
+                
+                Limpiar_Planta();
             }    
+            
+            ModeloArbol.reload();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error");
         }
@@ -471,6 +504,10 @@ public class Main extends javax.swing.JFrame {
                 
                 DefaultMutableTreeNode Nodo_newZombie = new DefaultMutableTreeNode(newZombie); 
                 ( (DefaultMutableTreeNode) Raiz.getChildAt(1).getChildAt(0)).add(Nodo_newZombie);
+                
+                JOptionPane.showMessageDialog(this, "Creado Exitosamente");
+                
+                Limpiar_Zombie();
             }else{
                 Zombie newZombie = new Zombie_Cargado(
                     (int) Z_SP_Size.getValue(),
@@ -482,11 +519,53 @@ public class Main extends javax.swing.JFrame {
                 );
                 DefaultMutableTreeNode Nodo_newZombie = new DefaultMutableTreeNode(newZombie); 
                 ( (DefaultMutableTreeNode) Raiz.getChildAt(1).getChildAt(1)).add(Nodo_newZombie);
+                
+                JOptionPane.showMessageDialog(this, "Creado Exitosamente");
+                
+                Limpiar_Zombie();
             }
+            
+            ModeloArbol.reload();
         } catch (Exception e) {
         }
 
     }//GEN-LAST:event_Z_BT_CrearMouseClicked
+
+    private void P_BT_ColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P_BT_ColorMouseClicked
+        P_BT_Color.setBackground(JColorChooser.showDialog(this, "Elegir", Color.yellow));
+    }//GEN-LAST:event_P_BT_ColorMouseClicked
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        int resp = JOptionPane.showConfirmDialog(this, "Seguro desea Eliminar el elemento?");
+        
+        if(resp == 0){
+            DefaultTreeModel Modelo = (DefaultTreeModel) T_Tree.getModel();
+            Modelo.removeNodeFromParent(Selected_Node);
+            Modelo.reload();
+        }
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void ElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirActionPerformed
+        T_L_PlantaElegida.setText("Planta Elegida: " + ((Planta) Selected_Entidad).getNombre());
+        
+        T_L_ZombieElegido.setText("Zombie Elegido: " + ((Zombie) Selected_Entidad).getNombre());
+    }//GEN-LAST:event_ElegirActionPerformed
+
+    private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
+        if(Selected_Entidad instanceof Zombie){
+            System.out.println(Selected_Entidad);
+        }else{
+            System.out.println(Selected_Entidad);
+        }
+        
+    }//GEN-LAST:event_ImprimirActionPerformed
+
+    private void Z_BT_AgregarPComidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Z_BT_AgregarPComidaMouseClicked
+        if(!Z_TF_NombrePComida.getText().isEmpty()){
+            Z_TA_PersonasComidas.append(Z_TF_NombrePComida.getText()+", ");
+            Z_TF_NombrePComida.setText("");
+        }
+    }//GEN-LAST:event_Z_BT_AgregarPComidaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -512,6 +591,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem Elegir;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Imprimir;
+    private javax.swing.JPopupMenu Menu_PopUp;
     private javax.swing.JButton P_BT_Color;
     private javax.swing.JButton P_BT_Crear;
     private javax.swing.JRadioButton P_RB_Alto;
@@ -530,7 +610,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField P_TF_Nombre;
     private javax.swing.JTextField P_TF_NombreProyectil1;
     private javax.swing.ButtonGroup P_Tipo;
-    private javax.swing.JPopupMenu PopUp;
     private javax.swing.JButton T_BT_Testear;
     private javax.swing.JLabel T_L_PlantaElegida;
     private javax.swing.JLabel T_L_ZombieElegido;
@@ -540,7 +619,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel Tab_Test;
     private javax.swing.JPanel Tab_Zombies;
     private javax.swing.JButton Z_BT_AgregarPComida;
-    private javax.swing.JButton Z_BT_Color;
+    private javax.swing.JTextField Z_BT_Color;
     private javax.swing.JButton Z_BT_Crear;
     private javax.swing.JRadioButton Z_RB_Cargado;
     private javax.swing.JRadioButton Z_RB_Clasico;
@@ -595,6 +674,34 @@ public class Main extends javax.swing.JFrame {
     }
     
     DefaultMutableTreeNode Selected_Node;
-    Zombie Selected_Zombie;
-    Planta Selected_Planta;
+    Object Selected_Entidad;
+    
+    private void Limpiar_Planta(){
+        P_RB_Bajo.setSelected(true);
+        P_RB_Explosiva.setSelected(true);
+        P_TF_Nombre.setText("");
+        P_SP_Vida.setValue(0);
+        P_SP_Ataque.setValue(0);
+        P_SP_MagnitudExplosion.setValue(0);
+        P_SP_Altura.setValue(0);
+        P_TF_NombreProyectil1.setText("");
+        P_SP_Peso.setValue(0);
+        P_BT_Color.setBackground(new Color(76,80,82));
+        P_SP_Dureza.setValue(0);
+    }
+    
+    private void Limpiar_Zombie(){
+        Z_TF_Nombre.setText("");
+        Z_SP_Ataque.setValue(0);
+        Z_SP_Vida.setValue(0);
+        Z_SP_Edad.setValue(0);
+        Z_SP_Size.setValue(0);
+        Z_SP_AñosExperiencia.setValue(0);
+        Z_SP_Enojo.setValue(0);
+        Z_TF_NombrePComida.setText("");
+        Z_RB_Clasico.setSelected(true);
+        Z_BT_Color.setText("");
+        Z_TF_Imagen.setText("");
+        Z_TA_PersonasComidas.setText("");
+    }
 }
