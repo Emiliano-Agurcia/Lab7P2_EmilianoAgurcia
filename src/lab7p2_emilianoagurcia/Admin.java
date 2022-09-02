@@ -5,20 +5,23 @@
  */
 package lab7p2_emilianoagurcia;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author emili
  */
-public class Clase_Administradora {
+public class Admin {
     private ArrayList <Entidad> ListaEntidades = new ArrayList();
     private ArrayList <Planta> ListaPlantas = new ArrayList();
     private ArrayList <Zombie> ListaZombies = new ArrayList();
     private File Archivo = null;
     
-    public Clase_Administradora(String path) {
+    public Admin(String path) {
         Archivo = new File(path);
     }
 
@@ -54,21 +57,54 @@ public class Clase_Administradora {
         this.Archivo = Archivo;
     }
     
-    private String CargarZombies(){
+    private String LeerZombiesScanner(){
         String TextoEnArchivo = "";
+        
+        if(Archivo.exists()){
+            try {
+                
+            } catch (Exception e) {
+            }
+        }
         
         return TextoEnArchivo;
     }
-    private String CargarPlantas(){
+    private String LeerPlantasScanner(){
         String TextoEnArchivo = "";
+        Scanner Tipo = null;
+        
+        if(Archivo.exists()){
+            try {
+                
+            } catch (Exception e) {
+            }
+        }
         
         return TextoEnArchivo;
     }
     
     private void EscribirZombies(){
+        FileWriter FW = null;
+        BufferedWriter BW = null;
         
+        if(Archivo.exists()){
+            try {
+                
+            } catch (Exception e) {
+                
+            }
+        }
     }
     private void EscribirPlantas(){
+        FileWriter FW = null;
+        BufferedWriter BW = null;
         
+        if(Archivo.exists()){
+            try {
+                
+            } catch (Exception e) {
+                
+            }
+        }
     }
 }

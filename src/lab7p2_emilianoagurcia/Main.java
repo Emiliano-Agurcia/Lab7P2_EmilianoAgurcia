@@ -502,6 +502,11 @@ public class Main extends javax.swing.JFrame {
             }    
             
             ModeloArbol.reload();
+            
+//Archivo            
+            Admin ADM = new Admin("./Plantas.txt");
+            
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error");
         }
@@ -546,6 +551,11 @@ public class Main extends javax.swing.JFrame {
             }
             
             ModeloArbol.reload();
+
+//Archivo            
+            Admin ADM = new Admin("./Zombies.txt");
+            
+            
         } catch (Exception e) {
         }
 
