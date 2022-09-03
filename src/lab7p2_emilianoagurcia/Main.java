@@ -66,7 +66,7 @@ public class Main extends javax.swing.JFrame {
         
         Admin AD = new Admin("./Zombies.txt");
         try {
-            AD.LeerPlantasScanner();
+            
         } catch (Exception e) {
         }
         

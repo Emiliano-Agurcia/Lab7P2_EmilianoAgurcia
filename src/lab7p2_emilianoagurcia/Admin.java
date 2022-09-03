@@ -61,31 +61,69 @@ public class Admin {
         this.Archivo = Archivo;
     }
     
-    public void LeerZombiesScanner() throws IOException{
+    public void LeerZombies() throws IOException{
         FileReader FR = null;
         BufferedReader BR = null;
-        String linea = "";
         
         if(Archivo.exists()){
             try {
-                while( BR.readLine() != null){
-                    FR = new FileReader(Archivo);
-                    BR = new BufferedReader(FR);
+                FR = new FileReader(Archivo);
+                BR = new BufferedReader(FR);
+                
+                //Super
+                String Nombre = "";
+                int Vida = 0;
+                int Ataque = 0;
+                
+                //Cargado
+                int Size = 0;
+                int Edad = 0;
+                int NivelEnojo = 0;
+                ArrayList <String> PersonasComidas = new ArrayList();
 
-                    String[] Zombie = BR.readLine().split("|");
+                //Clasico
+                int YearsExperiencia = 0;
+                
+                String Color = "";
+                String DireccionImagen = "";
+                Bandera Bandera = new Bandera(Color, DireccionImagen);
+                
+                String[] Zombies = BR.readLine().split("|");
+                
+                for (int i = 0; i < Zombies.length; i++) {
+                    String[] Super_o_Tipo = Zombies[i].split("_");
                     
-                    String[] Tipo = Zombie[0].split(":");
                     
-                    for (int i = 0; i < Tipo.length; i++) {
+                    if(Super_o_Tipo[0].contains(":")){
+                        String[] Colon = Super_o_Tipo[0].split(":");
                         
-                        if(Tipo[i].contains(";")){
-                            String[] Atributo = Tipo[0].split("|");
-                        }
-                        
-                    }
+                        if(Colon[0].equals("Clasico")){
+                            String[] Atributo = Super_o_Tipo[1].split(",");
+                            for (int j = 0; j < Atributo.length; j++) {
+                                String[] Valor = Atributo[j].split("=");
+                                if(Valor[0].){
+                                    
+                                }else if(){
+                                    
+                                }else if(){
+                                    
+                                }
+                            }
                             
-                    System.out.println(Tipo);
+                        }else if(Colon[0].equals("Cargado")){
+                            
+                        }
+                    }else{
+                        String[] Colon = Super_o_Tipo[1].split(":");
+                        
+                        if(Colon[0].equals("Clasico")){
+                            
+                        }else if(Colon[0].equals("Cargado")){
+                            
+                        }
+                    }
                 }
+                
             } catch (Exception e) {
                 
             }finally{
@@ -94,7 +132,7 @@ public class Admin {
             }    
         }
     }
-    public void LeerPlantasScanner() throws FileNotFoundException, IOException{
+    public void LeerPlantas() throws FileNotFoundException, IOException{
         FileReader FR = null;
         BufferedReader BR = null;
         
@@ -102,6 +140,7 @@ public class Admin {
             FR = new FileReader(Archivo);
             BR = new BufferedReader(FR);
             
+            //Super
             String Nombre = "";
             String Rango = "";
             int Vida = 0;
@@ -130,6 +169,7 @@ public class Admin {
                 String[] Super_o_Tipo = Planta[i].split("_");                    //Super de Clase Planta, o Tipo de Planta
                 
                 for (int j = 0; j < Super_o_Tipo.length; j++) {
+                    
                     if(Super_o_Tipo[j].contains(":")){
                         String[] Colon = Super_o_Tipo[j].split(":");
                         
@@ -141,11 +181,11 @@ public class Admin {
                                 String[] Atributo = Atributos.split(";");
                                 
                                 for (int l = 0; l < Atributo.length; l++) {
-                                    String[] Valores = Atributo[k].split("=");
-                                    if(Valores[0].equals("Color")){
-                                        Color = Valores[1];
-                                    }else if(Valores[0].equals("Proyectil")){
-                                        Proyectil = Valores[1];
+                                    String[] Valor = Atributo[k].split("=");
+                                    if(Valor[0].equals("Color")){
+                                        Color = Valor[1];
+                                    }else if(Valor[0].equals("Proyectil")){
+                                        Proyectil = Valor[1];
                                     }
                                 }
                             }else if(Colon[0].equals("Defensa")){               //Planta_Defensa
@@ -154,14 +194,14 @@ public class Admin {
                                 String[] Atributo = Atributos.split(";");
                                 
                                 for (int l = 0; l < Atributo.length; l++) {
-                                    String[] Valores = Atributo[k].split("=");
+                                    String[] Valor = Atributo[k].split("=");
                                     
-                                    if(Valores[0].equals("Peso")){
-                                        Peso = Integer.parseInt(Valores[1]);
-                                    }else if(Valores[0].equals("Altura")){
-                                        Altura = Integer.parseInt(Valores[1]);
-                                    }else if(Valores[0].equals("Dureza")){
-                                        Dureza = Integer.parseInt(Valores[1]);
+                                    if(Valor[0].equals("Peso")){
+                                        Peso = Integer.parseInt(Valor[1]);
+                                    }else if(Valor[0].equals("Altura")){
+                                        Altura = Integer.parseInt(Valor[1]);
+                                    }else if(Valor[0].equals("Dureza")){
+                                        Dureza = Integer.parseInt(Valor[1]);
                                     }
                                     
                                 }
