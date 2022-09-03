@@ -13,9 +13,9 @@ import java.awt.Color;
  */
 public class Planta_Disparo extends Planta{
     String NombreProyectil;
-    Color Color;
+    String Color;
 
-    public Planta_Disparo(String NombreProyectil, Color Color, String Rango, String Nombre, int Ataque, int Vida) {
+    public Planta_Disparo(String NombreProyectil, String Color, String Rango, String Nombre, int Ataque, int Vida) {
         super(Rango, Nombre, Ataque, Vida);
         this.NombreProyectil = NombreProyectil;
         this.Color = Color;
@@ -32,11 +32,11 @@ public class Planta_Disparo extends Planta{
         this.NombreProyectil = NombreProyectil;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return Color;
     }
 
-    public void setColor(Color Color) {
+    public void setColor(String Color) {
         this.Color = Color;
     }
 

@@ -64,8 +64,12 @@ public class Main extends javax.swing.JFrame {
         //Fin Nodos Plantas y Zombies
         
         
-        Admin AD = new Admin("./Plantas.txt");
-        AD.Cargar();
+        Admin AD = new Admin("./Zombies.txt");
+        try {
+            AD.LeerPlantasScanner();
+        } catch (Exception e) {
+        }
+        
         
     }
 
@@ -122,7 +126,7 @@ public class Main extends javax.swing.JFrame {
         P_RB_Defensa = new javax.swing.JRadioButton();
         P_RB_Explosiva = new javax.swing.JRadioButton();
         P_TF_NombreProyectil1 = new javax.swing.JTextField();
-        P_BT_Color = new javax.swing.JButton();
+        P_TF_Color = new javax.swing.JTextField();
         Tab_Zombies = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -294,13 +298,7 @@ public class Main extends javax.swing.JFrame {
         P_RB_Explosiva.setText("Explosiva");
         Tab_Plantas.add(P_RB_Explosiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
         Tab_Plantas.add(P_TF_NombreProyectil1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 180, -1));
-
-        P_BT_Color.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                P_BT_ColorMouseClicked(evt);
-            }
-        });
-        Tab_Plantas.add(P_BT_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, 20));
+        Tab_Plantas.add(P_TF_Color, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, 140, -1));
 
         jTabbedPane1.addTab("Plantas", Tab_Plantas);
 
@@ -468,7 +466,7 @@ public class Main extends javax.swing.JFrame {
     }else if (P_RB_Disparo.isSelected()) {
                 Planta newPlanta = new Planta_Disparo(
                                 Rango,
-                                P_BT_Color.getBackground(),
+                                P_TF_Color.getText(),
                                 Rango,
                                 P_TF_Nombre.getText(),
                                 (int) P_SP_Ataque.getValue(),
@@ -566,10 +564,6 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_Z_BT_CrearMouseClicked
 
-    private void P_BT_ColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P_BT_ColorMouseClicked
-        P_BT_Color.setBackground(JColorChooser.showDialog(this, "Elegir", Color.yellow));
-    }//GEN-LAST:event_P_BT_ColorMouseClicked
-
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         int resp = JOptionPane.showConfirmDialog(this, "Seguro desea Eliminar el elemento?");
         
@@ -624,7 +618,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Imprimir;
     private javax.swing.JPopupMenu Menu_PopUp;
-    private javax.swing.JButton P_BT_Color;
     private javax.swing.JButton P_BT_Crear;
     private javax.swing.JRadioButton P_RB_Alto;
     private javax.swing.JRadioButton P_RB_Bajo;
@@ -639,6 +632,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JSpinner P_SP_MagnitudExplosion;
     private javax.swing.JSpinner P_SP_Peso;
     private javax.swing.JSpinner P_SP_Vida;
+    private javax.swing.JTextField P_TF_Color;
     private javax.swing.JTextField P_TF_Nombre;
     private javax.swing.JTextField P_TF_NombreProyectil1;
     private javax.swing.ButtonGroup P_Tipo;
@@ -710,7 +704,7 @@ public class Main extends javax.swing.JFrame {
         P_SP_Altura.setValue(0);
         P_TF_NombreProyectil1.setText("");
         P_SP_Peso.setValue(0);
-        P_BT_Color.setBackground(new Color(76,80,82));
+        P_TF_Color.setText("");
         P_SP_Dureza.setValue(0);
     }
     
