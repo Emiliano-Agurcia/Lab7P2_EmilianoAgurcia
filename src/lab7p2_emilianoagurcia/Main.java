@@ -62,6 +62,11 @@ public class Main extends javax.swing.JFrame {
         Nodo_Zombies.add(Nodo_Zombie_Clasico);
         Nodo_Zombies.add(Nodo_Zombie_Cargado);
         //Fin Nodos Plantas y Zombies
+        
+        
+        Admin AD = new Admin("./Plantas.txt");
+        AD.Cargar();
+        
     }
 
     /**

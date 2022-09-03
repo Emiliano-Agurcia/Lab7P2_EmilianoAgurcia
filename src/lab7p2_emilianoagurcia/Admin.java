@@ -5,8 +5,10 @@
  */
 package lab7p2_emilianoagurcia;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -57,11 +59,16 @@ public class Admin {
         this.Archivo = Archivo;
     }
     
-    private String LeerZombiesScanner(){
+    public String LeerZombiesScanner(){
+        FileReader FR = null;
+        BufferedReader BR = null;
         String TextoEnArchivo = "";
+        String Texto = "";
         
         if(Archivo.exists()){
             try {
+                
+                
                 
             } catch (Exception e) {
             }
@@ -69,13 +76,17 @@ public class Admin {
         
         return TextoEnArchivo;
     }
-    private String LeerPlantasScanner(){
+    public String LeerPlantasScanner(){
+        FileReader FR = null;
+        BufferedReader BR = null;
         String TextoEnArchivo = "";
-        Scanner Tipo = null;
         
         if(Archivo.exists()){
             try {
                 
+                while( (TextoEnArchivo = BR.readLine()) != null){
+                    TextoEnArchivo += BR.readLine();
+                }
             } catch (Exception e) {
             }
         }
@@ -83,7 +94,7 @@ public class Admin {
         return TextoEnArchivo;
     }
     
-    private void EscribirZombies(){
+    public void EscribirZombies(){
         FileWriter FW = null;
         BufferedWriter BW = null;
         
@@ -95,7 +106,7 @@ public class Admin {
             }
         }
     }
-    private void EscribirPlantas(){
+    public void EscribirPlantas(){
         FileWriter FW = null;
         BufferedWriter BW = null;
         
@@ -106,5 +117,29 @@ public class Admin {
                 
             }
         }
+    }
+    
+    public void Cargar(){
+        FileReader FR = null;
+        BufferedReader BR = null;
+        String linea = "";
+        
+        if(Archivo.exists()){
+            System.out.println("Existe");
+            try {
+                while( BR.readLine() != null){
+                    FR = new FileReader(Archivo);
+                    BR = new BufferedReader(FR);
+
+                    String[] Tipo = BR.readLine().split("|");
+
+                    System.out.println(Tipo);
+                }
+            } catch (Exception e) {
+            }    
+        }else{
+            System.out.println("No Existe");
+        }
+        
     }
 }
