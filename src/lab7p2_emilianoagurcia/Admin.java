@@ -91,38 +91,64 @@ public class Admin {
                 String[] Zombies = BR.readLine().split("|");
                 
                 for (int i = 0; i < Zombies.length; i++) {
+                    boolean Cargado = false;
+                    boolean Clasico = false;
+                    
+                    
                     String[] Super_o_Tipo = Zombies[i].split("_");
                     
                     
                     if(Super_o_Tipo[0].contains(":")){
                         String[] Colon = Super_o_Tipo[0].split(":");
                         
-                        if(Colon[0].equals("Clasico")){
-                            String[] Atributo = Super_o_Tipo[1].split(",");
-                            for (int j = 0; j < Atributo.length; j++) {
-                                String[] Valor = Atributo[j].split("=");
-                                if(Valor[0].){
-                                    
-                                }else if(){
-                                    
-                                }else if(){
-                                    
-                                }
+                        String[] Atributo = Super_o_Tipo[1].split(",");
+
+                        for (int j = 0; j < Atributo.length; j++) {
+                            String[] Valor = Atributo[j].split("=");
+                            if (Valor[0].equals("Ataque")) {
+                                Ataque = Integer.parseInt(Valor[1]);
+                            } else if (Valor[0].equals("Nombre")) {
+                                Nombre = Valor[1];
+                            } else if (Valor[0].equals("Vida")) {
+                                Vida = Integer.parseInt(Valor[1]);
                             }
+                        }
+                        
+                        if(Colon[0].equals("Clasico")) {
                             
-                        }else if(Colon[0].equals("Cargado")){
-                            
+                        } else if (Colon[0].equals("Cargado")) {
+
                         }
                     }else{
                         String[] Colon = Super_o_Tipo[1].split(":");
                         
                         if(Colon[0].equals("Clasico")){
+                            Clasico = true;
+                            String AtributosJuntos = Colon[1]+Colon[2]+Colon[3];
+                            String Atributos = AtributosJuntos.substring(1, AtributosJuntos.length()-1);
+                            
+                            String[] Atributo = Atributos.split(";");
+                            for (int j = 0; j < Atributo.length; j++) {
+                                if(Atributo[j].contains("[")){
+                                    String[] Valor = Atributo[j].split("=");
+                                    
+                                    for (int k = 0; k < Valor.length; k++) {
+                                        if(Valor[k].equals("Experiencia")){
+                                            YearsExperiencia = Integer.parseInt(Valor[1]);
+                                        }else{
+                                            String AtributosBandera = Valor[1].substring(1, Valor[1].length()-1);
+                                        }
+                                    }
+                                    
+                                }    
+                            }
+                            
                             
                         }else if(Colon[0].equals("Cargado")){
-                            
+                            Cargado = true;
                         }
                     }
-                }
+                }//Fin Zombies
                 
             } catch (Exception e) {
                 
@@ -238,7 +264,7 @@ public class Admin {
                 }else if(Explosiva == true){
                     Planta newPlanta = new Planta_Explosiva(Magnitud, Rango, Nombre, Ataque, Vida);
                 }    
-            }
+            }//Fin Plantas
             FR.close();
             BR.close();
         }
